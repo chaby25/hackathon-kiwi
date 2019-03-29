@@ -1,5 +1,6 @@
-.App {
+.form-group {
   text-align: center;
+  margin: 80px;
 }
 
 .App-logo {
@@ -21,6 +22,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.hola {
+  height: 900px;
 }
 
 @keyframes App-logo-spin {
