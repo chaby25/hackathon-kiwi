@@ -54,9 +54,13 @@ console.log('Magic happens on port ' + port);
         '-13.44',
         '42.96',
         '5.15',
+        5
     );
-    const numberCities = 5;
-    locations.slice(0, numberCities)
 
-    nomad('BCN', '01/06/2019','15/06/2019');
+    console.log(locations.map((location) => location.code))
+    nomad('HEL', '01/06/2019','25/06/2019',2, 'price',locations.map((location) => location.code));
+    nomad('HEL', '01/06/2019','25/06/2019',2, 'quality',locations.map((location) => location.code));
+
+    //nomad('BCN', '01/06/2019','15/06/2019',2, 'price');
+
 })();
