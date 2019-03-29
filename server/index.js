@@ -6,6 +6,8 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
+var getLocationsBox = require('./getLocationsBox');
+var nomad = require('./nomad');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -19,9 +21,9 @@ var port = process.env.PORT || 8080;        // set our port
 var router = express.Router();              // get an instance of the express Router
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
+router.get('/', async function(req, res) {
     //get Locations
-
+    await getLocationsBox('1', '2',3,4);
 
 
     // once we have the locations, call nomad && multi_city
@@ -44,3 +46,17 @@ app.use('/api', router);
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
+
+
+(async function f() {
+    const locations = await getLocationsBox(
+        '36.27',
+        '-13.44',
+        '42.96',
+        '5.15',
+    );
+    const numberCities = 5;
+    locations.slice(0, numberCities)
+
+    nomad('BCN', '01/06/2019','15/06/2019');
+})();
