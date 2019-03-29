@@ -1,44 +1,68 @@
-# travel-hack
-The purpose of this repository is to provide a simple boilerplate for [Travel Hackathon](https://hack.travel/) to be ready for coding!
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-It contains all necessary things to start building application upon `orbit-components` and `kiwicom-relay`, with help of `next.js`.
+## Available Scripts
 
-## Used packages
- - [@kiwicom/orbit-components](https://github.com/kiwicom/orbit-components) - React components of our Orbit Design System
- - [@kiwicom/relay](https://github.com/kiwicom/relay) - Opinionated Relay wrapper for Kiwi.com
- - [@kiwicom/fetch](https://github.com/kiwicom/fetch) - Production ready fetch function
- - [@kiwicom/babel-preset-kiwicom](https://github.com/kiwicom/babel-preset-kiwicom) - Generic Babel preset for Kiwi.com projects
- - [@kiwicom/eslint-config-kiwicom](https://github.com/kiwicom/eslint-config-kiwicom) - General eslint configuration for Kiwi.com
- - and also [styled-components](https://github.com/styled-components/styled-components) - Probably the most used and the most famous CSS-in-JSS framework
- 
-## Installation
-All you have to do is to clone this repository and install dependencies: 
-```bash
-git clone git@github.com:kiwicom/travel-hack.git
-cd travel-hack
-yarn
-```
+In the project directory, you can run:
 
-You are almost done now! Just simple use this command and start a dev server:
-```
-yarn dev
-```
+### `npm start`
 
-If you don't know how `next.js` works, just check its [docs](https://nextjs.org/docs/).
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Other commands
-If you want to build your project, just run:
-```bash
-yarn build
-```
-All needed files will appear in `.next` folder that you can deploy somewhere.
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
 
-There is also installed `eslint` so you can run `yarn lint` to lint your files and check for errors or warnings.
+### `npm test`
 
-## Static typing
-By default, the `Flow` is disabled so you can focus on developing something more valuable and don't have to waste time on static typing of your code.
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-If you want, you can delete rules inside `.eslintrc.js` file to enable Flow types. If so, you can use command to generate Flow types from GraphQL schema:
-```
-yarn relay
-```
+### `npm run build`
+
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
