@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import SearchForm from './components/SearchForm';
+import SelectorMap from './components/Map/SelectorMap';
+import CustomDestinationCard from './components/DestinationCard/CustomDestinationCard';
 
 class App extends Component {
 
     render() {
         return (
             <div>
-                <SearchForm/>
+                <CustomDestinationCard/>
             </div>
         );
     }
