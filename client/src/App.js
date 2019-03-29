@@ -1,28 +1,48 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import InputField from "@kiwicom/orbit-components/lib/InputField";
+import Button from '@kiwicom/orbit-components/es/Button/index';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    constructor() {
+        super();
+        this.state = {origin: 'Barcelona', number_persons: '', departure_date: '', outward_date: ''};
+    }
+
+    render() {
+        return (
+            <div>
+                <div className="form-group">
+                        <InputField
+                            label="Origin"
+                        />
+                        <InputField
+                            label="Number of persons"
+                            type="number"
+                            placeholder="Number of persons"
+                        />
+                        <InputField
+                            label="Departure date"
+                            type="date"
+                        />
+                        <InputField
+                            label="Outward date"
+                            type="date"
+                        />
+                    <Button onClick={this.search}
+                            block={false}
+                            type="primary"
+                            size="normal">
+                        Search
+                    </Button>
+                </div>
+            </div>
+        );
+    }
+
+    search = () => {
+        console.log('search')
+    }
 }
 
 export default App;
