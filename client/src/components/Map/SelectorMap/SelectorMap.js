@@ -1,43 +1,41 @@
-import ReactMapboxGl from "react-mapbox-gl";
-import { useState } from 'react';
-import React from 'react'
-import defaultTheme from "@kiwicom/orbit-components/lib/defaultTheme"
-import styled, { ThemeProvider } from "styled-components"
-import { Marker } from "react-mapbox-gl";
-import KiwiMarker from "@kiwicom/orbit-components/lib/Marker"
+import mapboxgl from "mapbox-gl/dist/mapbox-gl"
+import {useState} from 'react';
+import React, {useRef, useEffect} from 'react'
+import styled from "styled-components"
 
-const Map = ReactMapboxGl({
-    accessToken: "pk.eyJ1Ijoic2VyZ2lueXUiLCJhIjoiY2p0dXA5YnRqMWFzYzQzbDgxYzZkdGc2NyJ9.Wxd6O5fgDCcAqdA1fwNqCg",
-    minZoom: 0,
-    maxZoom: 7,
-    dragPan: true
-});
+mapboxgl.accessToken =
+    "pk.eyJ1Ijoic2VyZ2lueXUiLCJhIjoiY2p0dXA5YnRqMWFzYzQzbDgxYzZkdGc2NyJ9.Wxd6O5fgDCcAqdA1fwNqCg"
 
 const MapWrapper = styled.div`
-  position: absolute;
-  top: 90px;
   display: block;
-  height: calc(100% - 180px);
-  width: 66%;
-`;
+  height: 100vh;
+  width: 100vw;
+`
 
-function SelectorMap({handleGeolocation}) {
-    return (
-        <MapWrapper>
-            <Map
-                style="mapbox://styles/mapbox/streets-v9"
-                zoom={[5]}
-                onClick={(map, {lngLat}) => {
-                    console.log(handleGeolocation)
-                    handleGeolocation({lat: lngLat.lat, lon: lngLat.lng})
-                }}
-                containerStyle={{
-                    height: "100vh",
-                    width: "100vw"
-                }}>
-            </Map>
-        </MapWrapper>
-    );
+function SelectorMap() {
+    const mapRef = useRef(null);
+    const [mapObject, setMapObject] = useState();
+
+    useEffect(() => {
+        console.log(mapRef.current)
+        setMapObject(
+            new mapboxgl.Map({
+                container: mapRef.current,
+                style: "mapbox://styles/mapbox/streets-v9",
+            })
+        )
+    }, [])
+
+    useEffect(
+        () => {
+            if (!mapObject) {
+                return undefined
+            }
+        },
+        [mapObject]
+    )
+
+    return <MapWrapper ref={mapRef}/>;
 }
 
 export default SelectorMap
