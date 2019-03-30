@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -60,7 +60,7 @@ router.get('/', async function (req, res) {
     );
 
     const response = await Promise.all([
-        extracted(locations, req, res, 'price'),
+        //extracted(locations, req, res, 'price'),
         extracted(locations, req, res, 'quality')
     ])
 
@@ -76,6 +76,11 @@ async function extracted(locations, req, res, sort) {
     );
     const result2 = [];
     let i = 1;
+    result2.push({
+       "name": values.route[values.route.length-1].cityTo,
+       "order": ++i,
+       "geolocation": await getLocationInfo({term: values.route[values.route.length-1].flyTo,limit:1}),
+    });
     for (let route of values.route) {
         result2.push({
             "name": route.cityTo,

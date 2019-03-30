@@ -21,9 +21,10 @@ function SelectorMap({handleGeolocation}) {
                 container: mapRef.current,
                 style: "mapbox://styles/mapbox/streets-v9",
                 dragRotate: false,
-                minZoom: 5,
-                maxZoom: 10,
-                center: [44.723478511795065,6.718507093716255]
+                minZoom: 2,
+                maxZoom: 8,
+                zoom: 2,
+                center: [2.1772,41.390]
             })
         )
     }, []);

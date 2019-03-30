@@ -1,6 +1,6 @@
 import mapboxgl from "mapbox-gl/dist/mapbox-gl"
-import {useState} from 'react';
-import React, {useRef, useEffect} from 'react'
+import { useState } from 'react';
+import React, { useRef, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import styled from "styled-components"
 import KiwiMarker from "@kiwicom/orbit-components/lib/Marker"
@@ -14,6 +14,7 @@ const MapWrapper = styled.div`
   width: 100vw;
 `
 
+var lineArray = [];
 
 function SelectorMap({destinations}) {
     const mapRef = useRef(null)
@@ -25,9 +26,9 @@ function SelectorMap({destinations}) {
                 container: mapRef.current,
                 style: "mapbox://styles/mapbox/streets-v9",
                 dragRotate: false,
-                minZoom: 5,
+                minZoom: 2,
                 maxZoom: 10,
-                center: [44.723478511795065,6.718507093716255]
+                center: [44.723478511795065, 6.718507093716255]
             })
         )
     }, [])
@@ -38,28 +39,58 @@ function SelectorMap({destinations}) {
                 return undefined
             }
 
-            const markers = destinations.map(destination => {
+            const markers = destinations.map((destination, index) => {
                 const el = document.createElement("div")
 
                 const marker = new mapboxgl.Marker(el)
-                marker
-                    .setLngLat(new mapboxgl.LngLat(
-                        destination.geolocation.lon,
-                        destination.geolocation.lat
-                    ))
-                    .setOffset(new mapboxgl.MercatorCoordinate(0,-25))
-                    .addTo(mapObject);
+                if (index !== destinations.length - 1) {
+                    marker
+                        .setLngLat(new mapboxgl.LngLat(
+                            destination.geolocation.lon,
+                            destination.geolocation.lat
+                        ))
+                        .setOffset(new mapboxgl.MercatorCoordinate(0, -25))
+                        .addTo(mapObject);
+                }
 
+                lineArray.push([
+                    destination.geolocation.lon,
+                    destination.geolocation.lat,
+                ]);
                 setTimeout(() => {
                     ReactDOM.render(
-                        <div><KiwiMarker location={`${destination.order-1} - ${destination.name}`}/></div>,
+                        <div><KiwiMarker location={`${destination.order - 1} - ${destination.name}`}/></div>,
                         el
                     )
                 });
 
                 return marker
             });
-
+            mapObject.on('load', function () {
+                mapObject.addLayer({
+                    "id": "route",
+                    "type": "line",
+                    "source": {
+                        "type": "geojson",
+                        "data": {
+                            "type": "Feature",
+                            "properties": {},
+                            "geometry": {
+                                "type": "LineString",
+                                "coordinates": lineArray,
+                            }
+                        }
+                    },
+                    "layout": {
+                        "line-join": "round",
+                        "line-cap": "round"
+                    },
+                    "paint": {
+                        "line-color": "#888",
+                        "line-width": 8
+                    }
+                });
+            })
             const bounds = new mapboxgl.LngLatBounds()
 
 
