@@ -28,7 +28,6 @@ module.exports = {
 
     getLocationByCityId: async function (parameters) {
         const query = httpBuildQuery(parameters);
-        console.log(`${url}/locations/query${query}`);
         const response = await fetch(`${url}/locations/query${query}`, {
             method: 'GET',
             headers

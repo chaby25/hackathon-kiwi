@@ -23,14 +23,36 @@ var router = express.Router();              // get an instance of the express Ro
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', async function (req, res) {
-    //get Locations
-    await getLocationsBox('1', '2', 3, 4);
+    const locations = await getLocationsBox(
+        '36.27',
+        '-13.44',
+        '42.96',
+        '5.15',
+        5
+    );
 
+    const values = await nomad('BCN', '01/06/2019', '25/06/2019', 2, 'price', locations.map((location) => location.code));
+    const result2 = [];
+    let i = 1;
+    for (let route of values.route) {
+        result2.push({
+            "name": route.cityTo,
+            "order": ++i,
+            "geolocation": await getLocationInfo({term: route.flyTo,limit:1}),
+        });
+    }
 
-    // once we have the locations, call nomad && multi_city
-
-
-    res.json({message: 'hooray! welcome to our api!'});
+    res.json({
+        price: values.price,
+        currency: values.currency,
+        totalDuration: values.duration,
+        deepLink: values.deep_link,
+        totalDistance:
+            values.route.reduce((sum, route) => {
+                return route.distance + sum;
+            }, 0),
+        routes: result2,
+    });
 });
 
 // more routes for our API will happen here
@@ -47,40 +69,7 @@ console.log('Magic happens on port ' + port);
 
 
 (async function f() {
-    const locations = await getLocationsBox(
-        '36.27',
-        '-13.44',
-        '42.96',
-        '5.15',
-        5
-    );
 
-//    console.log(locations.map((location) => location.code))
-    var values = await nomad('BCN', '01/06/2019', '25/06/2019', 2, 'price', locations.map((location) => location.code));
-    var result2 = [];
-    var i = 1;
-    for (var route of values.route) {
-        result2.push({
-            "name": route.cityTo,
-            "order": i,
-            "geolocation": await getLocationInfo({term: route.flyTo,limit:1}),
-        });
-        ++i;
-    }
-
-    var result = {
-        price: values.price,
-        currency: values.currency,
-        totalDuration: values.duration,
-        deepLink: values.deep_link,
-        totalDistance:
-            values.route.reduce((sum, route) => {
-                return route.distance + sum;
-            }, 0),
-        routes: result2,
-    };
-
-    console.log(result);
     // nomad('HEL', '01/06/2019','25/06/2019',2, 'quality',locations.map((location) => location.code));
 
     //nomad('BCN', '01/06/2019','15/06/2019',2, 'price');
