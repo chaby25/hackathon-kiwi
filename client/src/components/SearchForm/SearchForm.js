@@ -22,7 +22,7 @@ class SearchForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {origin: '', number_of_persons: null, startDate: '', endDate: ''}
+        this.state = {origin: '', number_of_persons: null, startDate: null, endDate: null}
     }
 
     render() {
@@ -61,8 +61,8 @@ class SearchForm extends React.Component {
                             {
                                 origin: this.state.origin,
                                 number_of_persons: this.state.number_of_persons,
-                                departure_date: this.state.startDate,
-                                outward_date: this.state.endDate
+                                departure_date: this.state.startDate.format('YYYY/DD/MM'),
+                                outward_date: this.state.endDate.format('YYYY/DD/MM')
                             })
                     }}
                             type="primary"
