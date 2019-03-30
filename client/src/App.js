@@ -5,12 +5,40 @@ import ResultMap from "./components/Map/ResultMap/ResultMap";
 import SearchForm from './components/SearchForm/SearchForm';
 import styled from 'styled-components';
 import httpBuildQuery from "./httpBuildQuery";
+import Search from "@kiwicom/orbit-components/lib/icons/Search";
 
 const Page = styled.div`
     display:flex;
     height: 100vh;
     background: black;
     padding: 60px 100px;
+`;
+
+const Loading = styled.div`
+    position: fixed;
+    top: 0;
+    left:0;
+    display:flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background-color: rgba(0,0,0,.6);
+`;
+
+const IconContainer = styled.div`
+    color: #00A991;
+    transition: 1s all;
+    @keyframes leaves {
+        0% {
+            transform: scale(3);
+        }
+        100% {
+            transform: scale(7);
+        }
+    }
+    animation: leaves 2s infinite alternate;
 `;
 
 const FinalPage = styled.div`
@@ -39,6 +67,7 @@ function App() {
     const [geolocations, setGeolocations] = useState(null);
     const [trips, setTrips] = useState(null);
     const [searchFormData, setSearchData] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const addGeolocation = (low_lat, low_lon, high_lat, high_lon) => {
         setGeolocations({low_lat, low_lon, high_lat, high_lon})
@@ -48,6 +77,7 @@ function App() {
         if (geolocations === null || searchFormData === null) {
             return undefined;
         }
+        setLoading(true);
 
         const {low_lat, low_lon, high_lat, high_lon} = geolocations;
 
@@ -66,13 +96,14 @@ function App() {
             .then(res => res.json())
             .then((data) => {
                 setTrips(data);
+                setLoading(false);
             });
     }, [searchFormData, geolocations]);
 
     if (searchFormData === null) {
         return (
             <SearchForm handleSearchForm={setSearchData} />
-        )
+        );
     }
 
     if (trips !== null) {
@@ -88,11 +119,20 @@ function App() {
     }
 
     return (
-        <Page>
-            <SelectorMap
-                handleGeolocation={addGeolocation}
-            />
-        </Page>
+        <>
+            <Page>
+                <SelectorMap
+                    handleGeolocation={addGeolocation}
+                />
+            </Page>
+            {loading && (
+                <Loading>
+                    <IconContainer>
+                        <Search size="large" />
+                    </IconContainer>
+                </Loading>
+            )}
+        </>
     );
 }
 
