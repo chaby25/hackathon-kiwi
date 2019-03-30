@@ -10,10 +10,27 @@ const Page = styled.div`
     display:flex;
 `;
 
-const Result = styled.div`
-    width: 100%;
+const FinalPage = styled.div`
+    display:flex;
+    height: 100vh;
+    background: black;
+    padding: 20px;
+    justify-content: space-around;
 `;
 
+
+const Result = styled.div`
+    background: white;
+    flex: 0 0 45%;
+    padding: 30px 30px 50px 30px;
+    transform: ${(props) => `rotate(${-5+20*props.number}deg)`};
+    transition: 1s all;
+    transform: scale(.9);
+    z-index: 1;
+    :hover {
+        transform: scale(1);
+    }
+`;
 
 function App() {
     const [geolocations, setGeolocations] = useState([]);
@@ -55,13 +72,13 @@ function App() {
 
     if (trips !== null) {
         return (
-            <Page>
+            <FinalPage>
                 {trips.map((trip, index) => (
-                    <Result key={index}>
+                    <Result key={index} number={index}>
                         <ResultMap destinations={trip.routes} number={index} />
                     </Result>
                 ))}
-            </Page>
+            </FinalPage>
         )
     }
 
