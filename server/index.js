@@ -9,11 +9,23 @@ var bodyParser = require('body-parser');
 var getLocationsBox = require('./getLocationsBox');
 var nomad = require('./nomad');
 var getLocationInfo = require('./getLocationInfo');
+var helper = require('./utils/helper');
+var moment = require('moment');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(function (req, res, next) {
+
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
 
 var port = process.env.PORT || 8080;        // set our port
 
@@ -23,6 +35,7 @@ var router = express.Router();              // get an instance of the express Ro
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', async function (req, res) {
+
     const locations = await getLocationsBox(
         '36.27',
         '-13.44',
@@ -31,7 +44,12 @@ router.get('/', async function (req, res) {
         5
     );
 
-    const values = await nomad('BCN', '01/06/2019', '25/06/2019', 2, 'price', locations.map((location) => location.code));
+    const values = await nomad(
+        req.query.origin,
+        moment(req.query.departure_date),
+        moment(req.query.outward_date),
+        req.query.number_of_persons, 'price', locations.map((location) => location.code)
+    );
     const result2 = [];
     let i = 1;
     for (let route of values.route) {

@@ -28,11 +28,10 @@ function SelectorMap({handleGeolocation}) {
                 style="mapbox://styles/mapbox/streets-v9"
                 zoom={[5]}
                 onClick={(map, {lngLat}) => {
-                    console.log(handleGeolocation)
                     handleGeolocation({lat: lngLat.lat, lon: lngLat.lng})
                 }}
                 containerStyle={{
-                    height: "100vh",
+                    height: "100%",
                     width: "100vw"
                 }}>
             </Map>

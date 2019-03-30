@@ -1,6 +1,10 @@
 const repository = require('./utils/repository')
+const moment = require('moment');
+const helper = require('./utils/helper');
 
 module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCodes) {
+
+    console.log(dateTo.diff(dateFrom, "days"));
 
     const via = cityCodes.filter( (cityCode) => cityCode !== origin ).map(
         (cityCode) => {
@@ -9,8 +13,8 @@ module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCod
                     cityCode
                 ],
                 "nights_range": [
-                    1,
-                    10
+                    2,
+                    5
                 ]
             }
         }
@@ -19,8 +23,8 @@ module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCod
     const nomadResponse = await repository.nomad({
             adults,
             sort,
-            "date_from": dateFrom,
-            "date_to": dateTo,
+            "date_from": dateFrom.format('DD/MM/YYYY'),
+            "date_to": dateTo.format('DD/MM/YYYY'),
             "fly_from": origin,
             "fly_to": origin,
             "limit": 1,
@@ -30,6 +34,5 @@ module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCod
         });
 
     return nomadResponse.data[0];
-    // return locationsResponse;
 };
 
