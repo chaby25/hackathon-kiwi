@@ -14,13 +14,15 @@ var getLocationFullinformation = require('./getLocationFullinformation');
 var helper = require('./utils/helper');
 var moment = require('moment');
 
+var port = process.env.PORT || 8080;        // set our port
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -29,7 +31,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-var port = process.env.PORT || 8080;        // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -51,10 +52,10 @@ router.get('/autocomplete', async function (req, res) {
 router.get('/', async function (req, res) {
 
     const locations = await getLocationsBox(
-        '36.27',
-        '-13.44',
-        '42.96',
-        '5.15',
+        req.query.low_lat,
+        req.query.low_lon,
+        req.query.high_lat,
+        req.query.high_lon,
         5
     );
 
@@ -98,12 +99,3 @@ app.use('/api', router);
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
-
-
-(async function f() {
-
-    // nomad('HEL', '01/06/2019','25/06/2019',2, 'quality',locations.map((location) => location.code));
-
-    //nomad('BCN', '01/06/2019','15/06/2019',2, 'price');
-
-})();
