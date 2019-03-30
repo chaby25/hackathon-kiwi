@@ -21,6 +21,10 @@ const Title = styled.h1`
 
 const FormGroup = styled.div`
   width: 600px;
+  background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
 `;
 
 class SearchForm extends React.Component {
