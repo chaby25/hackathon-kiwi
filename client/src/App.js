@@ -39,7 +39,10 @@ const Result = styled.div`
 `;
 
 const TripInfo = styled.div`
-    padding: 10px 0px
+    padding: 10px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 `;
 
 const TequilaColor = {
@@ -93,15 +96,16 @@ function App() {
                 {trips.map((trip, index) => (
                     <Result key={index} number={index}>
                         <ResultMap destinations={trip.routes} number={index}/>
-                        <TripInfo><Airplane style={TequilaColor}/>{trip.totalDistance}km  -  {trip.totalDuration}  -  {trip.price} {trip.currency}
+                        <TripInfo><div><Airplane style={TequilaColor}/>{trip.totalDistance} km</div>  <div>{trip.totalDuration}</div>  <div>{trip.price} {trip.currency}</div>
+
                             <Button
-                                href="https://kiwi.com"
+                                href={trip.deepLink}
                                 external={false}
                                 size="normal"
                                 disabled={false}
                                 bordered
                                 iconLeft={<Invoice/>}
-                            >
+                            > &nbsp;&nbsp;
                                 Buy now
                             </Button>
                         </TripInfo>
