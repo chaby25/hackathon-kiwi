@@ -76,7 +76,6 @@ async function extracted(locations, req, res, sort) {
        "geolocation": await getLocationInfo({term: values.route[values.route.length-1].flyTo,limit:1}),
     });
     for (let route of values.route) {
-        console.log(route);
         result2.push({
             "name": route.cityTo,
             "departure_hour": moment(route.local_departure).format('DD/MM/Y - HH:mm'),
