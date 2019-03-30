@@ -1,51 +1,86 @@
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
-import { Component } from 'react';
-import ReactDOM from "react-dom";
-import Text from "@kiwicom/orbit-components/lib/Text";
-import React, { useEffect, useRef, useState } from 'react'
-import defaultTheme from "@kiwicom/orbit-components/lib/defaultTheme"
-import styled, { ThemeProvider } from "styled-components"
-import RatingStars from "./RatingStarts"
-import { getTokens } from "@kiwicom/orbit-components"
-import { Marker } from "react-mapbox-gl";
+import mapboxgl from "mapbox-gl/dist/mapbox-gl"
+import {useState} from 'react';
+import React, {useRef, useEffect} from 'react'
+import ReactDOM from 'react-dom'
+import styled from "styled-components"
 import KiwiMarker from "@kiwicom/orbit-components/lib/Marker"
 
-const Map = ReactMapboxGl({
-    accessToken: "pk.eyJ1Ijoic2VyZ2lueXUiLCJhIjoiY2p0dXA5YnRqMWFzYzQzbDgxYzZkdGc2NyJ9.Wxd6O5fgDCcAqdA1fwNqCg"
-});
+mapboxgl.accessToken =
+    "pk.eyJ1Ijoic2VyZ2lueXUiLCJhIjoiY2p0dXA5YnRqMWFzYzQzbDgxYzZkdGc2NyJ9.Wxd6O5fgDCcAqdA1fwNqCg"
 
 const MapWrapper = styled.div`
-  position: absolute;
-  top: 90px;
   display: block;
-  height: calc(100% - 180px);
-  width: 66%;
-`;
+  height: 100vh;
+  width: 100vw;
+`
 
-class ResultMap extends Component {
-    render() {
-        return (
-            <MapWrapper>
-                <Map
-                    style="mapbox://styles/mapbox/streets-v9"
-                    containerStyle={{
-                        height: "100vh",
-                        width: "100vw"
-                    }}>
-                    {this.props.destinations.map((destination) => {
-                        return (
-                            <Marker
-                                key={destination.name}
-                                coordinates={[destination.lon, destination.lat]}
-                                anchor="bottom">
-                                <KiwiMarker location={destination.name}/>
-                            </Marker>
-                        )
-                    })}
-                </Map>
-            </MapWrapper>
-        );
-    }
+
+function SelectorMap({destinations}) {
+    const mapRef = useRef(null)
+    const [mapObject, setMapObject] = useState()
+
+    useEffect(() => {
+        console.log(mapRef.current)
+        setMapObject(
+            new mapboxgl.Map({
+                container: mapRef.current,
+                style: "mapbox://styles/mapbox/streets-v9",
+            })
+        )
+    }, [])
+
+    useEffect(
+        () => {
+            if (!mapObject) {
+                return undefined
+            }
+
+            const markers = destinations.map(destination => {
+                const el = document.createElement("div")
+
+                const marker = new mapboxgl.Marker(el)
+                marker
+                    .setLngLat(new mapboxgl.LngLat(
+                        destination.geolocation.lon,
+                        destination.geolocation.lat
+                    ))
+                    .setOffset(new mapboxgl.MercatorCoordinate(0,-25))
+                    .addTo(mapObject);
+
+                setTimeout(() => {
+                    ReactDOM.render(
+                        <div><KiwiMarker location={`${destination.order-1} - ${destination.name}`}/></div>,
+                        el
+                    )
+                });
+
+                return marker
+            });
+
+            const bounds = new mapboxgl.LngLatBounds()
+
+
+            destinations.forEach(destination => {
+                bounds.extend([
+                    destination.geolocation.lon,
+                    destination.geolocation.lat
+                ])
+            })
+
+            mapObject.fitBounds(bounds, {
+                padding: {top: 100, bottom: 100, left: 100, right: 100}
+            })
+
+            return () => {
+                markers.forEach(marker => {
+                    marker.remove()
+                })
+            }
+        },
+        [JSON.stringify(destinations), mapObject]
+    );
+
+    return <MapWrapper ref={mapRef}/>;
 }
 
-export default ResultMap
+export default SelectorMap
