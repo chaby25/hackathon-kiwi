@@ -22,7 +22,7 @@ function SelectorMap({handleGeolocation}) {
                 style: "mapbox://styles/mapbox/streets-v9",
                 dragRotate: false,
                 minZoom: 2,
-                maxZoom: 8,
+                maxZoom: 10,
                 zoom: 2,
                 center: [2.1772,41.390]
             })
