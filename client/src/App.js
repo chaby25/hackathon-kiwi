@@ -5,6 +5,7 @@ import ResultMap from "./components/Map/ResultMap/ResultMap";
 import SearchForm from './components/SearchForm/SearchForm';
 import styled from 'styled-components';
 import httpBuildQuery from "./httpBuildQuery";
+import Trip from './components/Trip/Trip';
 
 const Page = styled.div`
     display:flex;
@@ -52,11 +53,15 @@ function App() {
     if (trips !== null) {
         return (
             <Page>
-                {trips.map((trip, index) => (
-                    <div key={index}>
-                        <ResultMap destinations={trip.routes} />
-                    </div>
-                ))}
+                {trips.map((trip, index) => {
+                    console.log(trip);
+                    return (
+                        <div key={index}>
+                            <ResultMap destinations={trip.routes} />
+                            <Trip destinations={trip.routes}/>
+                        </div>
+                    )
+                })}}
             </Page>
         )
     }

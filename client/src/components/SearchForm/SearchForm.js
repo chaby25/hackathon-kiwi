@@ -2,6 +2,7 @@ import React from 'react';
 import InputField from "@kiwicom/orbit-components/lib/InputField";
 import Button from '@kiwicom/orbit-components/es/Button/index';
 import styled from 'styled-components';
+import Trip from '../Trip/Trip';
 
 const Page = styled.div`
   display: flex;

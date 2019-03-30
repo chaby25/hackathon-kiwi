@@ -17,8 +17,8 @@ const MapWrapper = styled.div`
 var lineArray = [];
 
 function SelectorMap({destinations}) {
-    const mapRef = useRef(null)
-    const [mapObject, setMapObject] = useState()
+    const mapRef = useRef(null);
+    const [mapObject, setMapObject] = useState();
 
     useEffect(() => {
         setMapObject(
@@ -31,7 +31,7 @@ function SelectorMap({destinations}) {
                 center: [44.723478511795065, 6.718507093716255]
             })
         )
-    }, [])
+    }, []);
 
     useEffect(
         () => {
@@ -40,9 +40,9 @@ function SelectorMap({destinations}) {
             }
 
             const markers = destinations.map((destination, index) => {
-                const el = document.createElement("div")
+                const el = document.createElement("div");
 
-                const marker = new mapboxgl.Marker(el)
+                const marker = new mapboxgl.Marker(el);
                 if (index !== destinations.length - 1) {
                     marker
                         .setLngLat(new mapboxgl.LngLat(
@@ -90,7 +90,7 @@ function SelectorMap({destinations}) {
                         "line-width": 8
                     }
                 });
-            })
+            });
             const bounds = new mapboxgl.LngLatBounds()
 
 
@@ -99,11 +99,11 @@ function SelectorMap({destinations}) {
                     destination.geolocation.lon,
                     destination.geolocation.lat
                 ])
-            })
+            });
 
             mapObject.fitBounds(bounds, {
                 padding: {top: 100, bottom: 100, left: 100, right: 100}
-            })
+            });
 
             return () => {
                 markers.forEach(marker => {

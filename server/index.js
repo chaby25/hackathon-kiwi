@@ -60,7 +60,7 @@ router.get('/', async function (req, res) {
     );
 
     const response = await Promise.all([
-        //extracted(locations, req, res, 'price'),
+        extracted(locations, req, res, 'price'),
         extracted(locations, req, res, 'quality')
     ])
 
@@ -82,8 +82,10 @@ async function extracted(locations, req, res, sort) {
        "geolocation": await getLocationInfo({term: values.route[values.route.length-1].flyTo,limit:1}),
     });
     for (let route of values.route) {
+        console.log(route);
         result2.push({
             "name": route.cityTo,
+            "departure_hour": moment(route.local_departure).format('DD/MM/Y - HH:mm'),
             "order": ++i,
             "geolocation": await getLocationInfo({term: route.flyTo,limit:1}),
         });
