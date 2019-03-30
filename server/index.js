@@ -54,9 +54,9 @@ router.get('/', async function (req, res) {
     );
 
     const response = await Promise.all([
-        //extracted(locations, req, res, 'price'),
+        extracted(locations, req, res, 'price'),
         extracted(locations, req, res, 'quality')
-    ])
+    ]);
 
     res.json(response);
 });
@@ -64,8 +64,8 @@ router.get('/', async function (req, res) {
 async function extracted(locations, req, res, sort) {
     const values = await nomad(
         req.query.origin,
-        moment(req.query.departure_date),
-        moment(req.query.outward_date),
+        moment(req.query.departure_date, 'YYYY-MM-DD'),
+        moment(req.query.outward_date, 'YYYY-MM-DD'),
         req.query.number_of_persons, sort, locations.map((location) => location.code)
     );
     const result2 = [];

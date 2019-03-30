@@ -61,8 +61,8 @@ class SearchForm extends React.Component {
                             {
                                 origin: this.state.origin,
                                 number_of_persons: this.state.number_of_persons,
-                                departure_date: this.state.startDate.format('YYYY/DD/MM'),
-                                outward_date: this.state.endDate.format('YYYY/DD/MM')
+                                departure_date: this.state.startDate.format('YYYY-MM-DD'),
+                                outward_date: this.state.endDate.format('YYYY-MM-DD')
                             })
                     }}
                             type="primary"
