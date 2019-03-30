@@ -37,7 +37,7 @@ class SearchForm extends React.Component {
     render() {
         return (
             <Page>
-                <Heading type="display" element="h1" style={{color: '#666'}}>
+                <Heading type="display" element="div" style={{color: '#666'}}>
                     <Title>Visual NOMAD</Title>
                 </Heading>
                 <FormGroup>
