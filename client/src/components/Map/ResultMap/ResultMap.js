@@ -11,12 +11,10 @@ mapboxgl.accessToken =
 const MapWrapper = styled.div`
   display: block;
   height: 100vh;
-  width: 100vw;
-`
+  width: 100%;
+`;
 
-var lineArray = [];
-
-function SelectorMap({destinations}) {
+function SelectorMap({destinations, number}) {
     const mapRef = useRef(null)
     const [mapObject, setMapObject] = useState()
 
@@ -39,6 +37,8 @@ function SelectorMap({destinations}) {
                 return undefined
             }
 
+            const lineArray = [];
+
             const markers = destinations.map((destination, index) => {
                 const el = document.createElement("div")
 
@@ -57,6 +57,7 @@ function SelectorMap({destinations}) {
                     destination.geolocation.lon,
                     destination.geolocation.lat,
                 ]);
+
                 setTimeout(() => {
                     ReactDOM.render(
                         <div><KiwiMarker location={`${destination.order - 1} - ${destination.name}`}/></div>,
@@ -68,7 +69,7 @@ function SelectorMap({destinations}) {
             });
             mapObject.on('load', function () {
                 mapObject.addLayer({
-                    "id": "route",
+                    "id": "route"+number,
                     "type": "line",
                     "source": {
                         "type": "geojson",

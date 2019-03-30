@@ -10,6 +10,10 @@ const Page = styled.div`
     display:flex;
 `;
 
+const Result = styled.div`
+    width: 100%;
+`;
+
 
 function App() {
     const [geolocations, setGeolocations] = useState([]);
@@ -53,9 +57,9 @@ function App() {
         return (
             <Page>
                 {trips.map((trip, index) => (
-                    <div key={index}>
-                        <ResultMap destinations={trip.routes} />
-                    </div>
+                    <Result key={index}>
+                        <ResultMap destinations={trip.routes} number={index} />
+                    </Result>
                 ))}
             </Page>
         )
