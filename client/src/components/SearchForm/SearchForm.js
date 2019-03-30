@@ -39,7 +39,6 @@ class SearchForm extends React.Component {
                         name="number_of_persons"
                         label="Number of persons"
                         type="number"
-                        placeholder="Number of persons"
                         onChange={this.onSearchFormChange}
                     />
                     <br/>
