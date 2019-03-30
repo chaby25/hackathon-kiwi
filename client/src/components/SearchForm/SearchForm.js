@@ -35,14 +35,6 @@ class SearchForm extends React.Component {
                         onChange={this.onSearchFormChange}
                     />
                     <br/>
-                    <InputField
-                        name="number_of_persons"
-                        label="Number of persons"
-                        type="number"
-                        onChange={this.onSearchFormChange}
-                    />
-                    <br/>
-
                     <DateRangePicker
                         startDate={this.state.startDate} // momentPropTypes.momentObj or null,
                         startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
@@ -53,6 +45,14 @@ class SearchForm extends React.Component {
                         onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
                         block={true}
                     />
+                    <br/>
+                    <InputField
+                        name="number_of_persons"
+                        label="Number of persons"
+                        type="number"
+                        onChange={this.onSearchFormChange}
+                    />
+
                     <br/>
 
                     <Button onClick={() => {
