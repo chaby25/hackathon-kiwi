@@ -87,8 +87,9 @@ function SelectorMap({destinations, number}) {
                         "line-cap": "round"
                     },
                     "paint": {
-                        "line-color": "#888",
-                        "line-width": 8
+                        "line-color": "#00A991",
+                        "line-width": 8,
+                        'line-opacity': .8
                     }
                 });
             })
