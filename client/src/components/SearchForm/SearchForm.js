@@ -3,6 +3,7 @@ import InputField from "@kiwicom/orbit-components/lib/InputField";
 import Button from '@kiwicom/orbit-components/es/Button/index';
 import styled from 'styled-components';
 import {DateRangePicker} from "react-dates";
+import Heading from "@kiwicom/orbit-components/es/Heading/index";
 
 const Page = styled.div`
   display: flex;
@@ -28,6 +29,9 @@ class SearchForm extends React.Component {
     render() {
         return (
             <Page>
+                <Heading type="display" element="h1">
+                    Visual NOMAD
+                </Heading>
                 <FormGroup>
                     <InputField
                         name="origin"
