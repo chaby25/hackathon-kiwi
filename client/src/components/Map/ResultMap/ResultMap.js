@@ -25,7 +25,7 @@ function SelectorMap({destinations}) {
                 container: mapRef.current,
                 style: "mapbox://styles/mapbox/streets-v9",
                 dragRotate: false,
-                minZoom: 5,
+                minZoom: 2,
                 maxZoom: 10,
                 center: [44.723478511795065,6.718507093716255]
             })
