@@ -20,11 +20,11 @@ function SelectorMap({destinations}) {
     const [mapObject, setMapObject] = useState()
 
     useEffect(() => {
-        console.log(mapRef.current)
         setMapObject(
             new mapboxgl.Map({
                 container: mapRef.current,
                 style: "mapbox://styles/mapbox/streets-v9",
+                dragRotate: false
             })
         )
     }, [])

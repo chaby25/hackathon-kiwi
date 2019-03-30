@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .form-group {
   text-align: center;
   margin: 80px;
