@@ -25,7 +25,6 @@ function App() {
             return undefined;
         }
 
-
         const query = httpBuildQuery({
             origin: searchFormData.origin,
             number_of_persons: searchFormData.number_of_persons,
@@ -48,8 +47,9 @@ function App() {
     if (trips !== null) {
         return (
             <Page>
-                <ResultMap destinations={trips.routes} />
-                <ResultMap destinations={trips.routes} />
+                {trips.map((trip) => (<div>
+                    <ResultMap destinations={trip.routes} />
+                </div>))}
             </Page>
         )
     }
