@@ -8,7 +8,7 @@ mapboxgl.accessToken =
     "pk.eyJ1Ijoic2VyZ2lueXUiLCJhIjoiY2p0dXA5YnRqMWFzYzQzbDgxYzZkdGc2NyJ9.Wxd6O5fgDCcAqdA1fwNqCg"
 
 const MapWrapper = styled.div`
-  height: 75vh;
+  height: 70vh;
   width: 100%;
   position: relative;
 `;
@@ -38,7 +38,7 @@ function SelectorMap({handleGeolocation}) {
                 style: "mapbox://styles/mapbox/streets-v9",
                 dragRotate: false,
                 minZoom: 2,
-                maxZoom: 8,
+                maxZoom: 10,
                 zoom: 2,
                 center: [2.1772,41.390]
             })
