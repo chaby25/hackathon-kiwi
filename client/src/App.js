@@ -52,9 +52,11 @@ function App() {
     if (trips !== null) {
         return (
             <Page>
-                {trips.map((trip, index) => (<div>
-                    <ResultMap key={index} destinations={trip.routes} />
-                </div>))}
+                {trips.map((trip, index) => (
+                    <div key={index}>
+                        <ResultMap destinations={trip.routes} />
+                    </div>
+                ))}
             </Page>
         )
     }

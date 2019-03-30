@@ -24,7 +24,10 @@ function SelectorMap({destinations}) {
             new mapboxgl.Map({
                 container: mapRef.current,
                 style: "mapbox://styles/mapbox/streets-v9",
-                dragRotate: false
+                dragRotate: false,
+                minZoom: 10,
+                maxZoom: 5,
+                center: [44.723478511795065,6.718507093716255]
             })
         )
     }, [])
