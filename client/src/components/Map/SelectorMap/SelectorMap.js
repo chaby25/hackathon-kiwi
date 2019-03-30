@@ -8,7 +8,7 @@ mapboxgl.accessToken =
     "pk.eyJ1Ijoic2VyZ2lueXUiLCJhIjoiY2p0dXA5YnRqMWFzYzQzbDgxYzZkdGc2NyJ9.Wxd6O5fgDCcAqdA1fwNqCg"
 
 const MapWrapper = styled.div`
-  height: 75vh;
+  height: 70vh;
   width: 100%;
   position: relative;
 `;

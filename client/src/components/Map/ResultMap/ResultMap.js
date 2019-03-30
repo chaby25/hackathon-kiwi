@@ -10,7 +10,7 @@ mapboxgl.accessToken =
 
 const MapWrapper = styled.div`
   display: block;
-  height: 85vh;
+  height: 80vh;
   width: 100%;
 `;
 
@@ -24,8 +24,8 @@ function SelectorMap({destinations, number}) {
                 container: mapRef.current,
                 style: "mapbox://styles/mapbox/streets-v9",
                 dragRotate: false,
-                minZoom: 2,
-                maxZoom: 10,
+                minZoom: 1,
+                maxZoom: 11,
                 center: [44.723478511795065, 6.718507093716255]
             })
         )
