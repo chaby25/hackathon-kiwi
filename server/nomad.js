@@ -29,7 +29,7 @@ module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCod
             via
         });
 
-    console.log(nomadResponse.data[0])
-
+    return nomadResponse.data[0];
     // return locationsResponse;
 };
+
