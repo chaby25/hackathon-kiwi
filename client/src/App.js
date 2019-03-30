@@ -8,6 +8,9 @@ import httpBuildQuery from "./httpBuildQuery";
 
 const Page = styled.div`
     display:flex;
+    height: 100vh;
+    background: black;
+    padding: 60px 100px;
 `;
 
 const FinalPage = styled.div`
@@ -33,28 +36,30 @@ const Result = styled.div`
 `;
 
 function App() {
-    const [geolocations, setGeolocations] = useState([]);
+    const [geolocations, setGeolocations] = useState(null);
     const [trips, setTrips] = useState(null);
     const [searchFormData, setSearchData] = useState(null);
 
-    const addGeolocation = (lon, lat) => {
-        setGeolocations(geolocations.concat({lon, lat}))
+    const addGeolocation = (low_lat, low_lon, high_lat, high_lon) => {
+        setGeolocations({low_lat, low_lon, high_lat, high_lon})
     };
 
     useEffect(() => {
-        if (geolocations.length < 2 || searchFormData === null) {
+        if (geolocations === null || searchFormData === null) {
             return undefined;
         }
+
+        const {low_lat, low_lon, high_lat, high_lon} = geolocations;
 
         const query = httpBuildQuery({
             origin: searchFormData.origin,
             number_of_persons: searchFormData.number_of_persons,
             departure_date: searchFormData.departure_date,
             outward_date: searchFormData.outward_date,
-            low_lat: geolocations[0].lat,
-            low_lon: geolocations[0].lon,
-            high_lat: geolocations[1].lat,
-            high_lon: geolocations[1].lon
+            low_lat,
+            low_lon,
+            high_lat,
+            high_lon
         });
 
         fetch(`http://localhost:8080/api${query}`)
