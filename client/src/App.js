@@ -1,16 +1,25 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import SelectorMap from './components/Map/SelectorMap/SelectorMap';
 
-class App extends Component {
+const destinations =[{lat: 41.388973, lon: 2.091430, name: '1. Barcelona'},{ lat: 51.527450, lon: -0.352946, name: '2. London'}];
 
-    render() {
-        return (
-            <div>
-                <SelectorMap destinations={[{lat: 41.388973, lon: 2.091430, name: '1. Barcelona'},{ lat: 51.527450, lon: -0.352946, name: '2. London'}]}/>
-            </div>
-        );
-    }
+function App() {
+    const [geolocations, setGeolocations] = useState(0);
+
+    console.log(geolocations)
+
+    return (
+        <div>
+            {geolocations}
+            <SelectorMap
+                destinations={destinations}
+                handleGeolocation={(geolocation) => {
+                    setGeolocations(geolocations + 1)
+                }}
+            />
+        </div>
+    );
 }
 
 export default App;

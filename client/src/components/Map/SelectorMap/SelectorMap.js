@@ -1,5 +1,5 @@
 import ReactMapboxGl from "react-mapbox-gl";
-import { Component } from 'react';
+import { useState } from 'react';
 import React from 'react'
 import defaultTheme from "@kiwicom/orbit-components/lib/defaultTheme"
 import styled, { ThemeProvider } from "styled-components"
@@ -21,32 +21,23 @@ const MapWrapper = styled.div`
   width: 66%;
 `;
 
-class SelectorMap extends Component {
-    render() {
-        return (
-            <MapWrapper>
-                <Map
-                    style="mapbox://styles/mapbox/streets-v9"
-                    zoom={[5]}
-                    onClick={(map, event) => {console.log(event.lngLat)}}
-                    containerStyle={{
-                        height: "100vh",
-                        width: "100vw"
-                    }}>
-                    {this.props.destinations.map((destination) => {
-                        return (
-                            <Marker
-                                key={destination.name}
-                                coordinates={[destination.lon, destination.lat]}
-                                anchor="bottom">
-                                <KiwiMarker location={destination.name}/>
-                            </Marker>
-                        )
-                    })}
-                </Map>
-            </MapWrapper>
-        );
-    }
+function SelectorMap({handleGeolocation}) {
+    return (
+        <MapWrapper>
+            <Map
+                style="mapbox://styles/mapbox/streets-v9"
+                zoom={[5]}
+                onClick={(map, {lngLat}) => {
+                    console.log(handleGeolocation)
+                    handleGeolocation({lat: lngLat.lat, lon: lngLat.lng})
+                }}
+                containerStyle={{
+                    height: "100vh",
+                    width: "100vw"
+                }}>
+            </Map>
+        </MapWrapper>
+    );
 }
 
 export default SelectorMap
