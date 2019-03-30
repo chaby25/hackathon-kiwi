@@ -4,8 +4,7 @@ const helper = require('./utils/helper');
 
 module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCodes) {
 
-    console.log(dateTo.diff(dateFrom, "days"));
-
+    let diffDays = dateTo.diff(dateFrom, "days");
     const via = cityCodes.filter( (cityCode) => cityCode !== origin ).map(
         (cityCode) => {
             return {
@@ -14,7 +13,7 @@ module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCod
                 ],
                 "nights_range": [
                     2,
-                    5
+                    Math.floor(diffDays/5),
                 ]
             }
         }
