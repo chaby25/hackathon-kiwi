@@ -2,7 +2,7 @@ const repository = require('./utils/repository')
 
 module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCodes) {
 
-    const via = cityCodes.map(
+    const via = cityCodes.filter( (cityCode) => cityCode !== origin ).map(
         (cityCode) => {
             return {
                 "locations": [
@@ -15,8 +15,7 @@ module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCod
             }
         }
     )
-    console.log(via);
-    console.log(" ---------------------------------------------")
+
     const nomadResponse = await repository.nomad({
             adults,
             sort,
@@ -30,7 +29,7 @@ module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCod
             via
         });
 
-    console.log(nomadResponse)
+    console.log(nomadResponse.data[0])
 
     // return locationsResponse;
 };

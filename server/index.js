@@ -57,9 +57,9 @@ console.log('Magic happens on port ' + port);
         5
     );
 
-    console.log(locations.map((location) => location.code))
-    nomad('HEL', '01/06/2019','25/06/2019',2, 'price',locations.map((location) => location.code));
-    nomad('HEL', '01/06/2019','25/06/2019',2, 'quality',locations.map((location) => location.code));
+//    console.log(locations.map((location) => location.code))
+    nomad('BCN', '01/06/2019','25/06/2019',2, 'price',locations.map((location) => location.code));
+   // nomad('HEL', '01/06/2019','25/06/2019',2, 'quality',locations.map((location) => location.code));
 
     //nomad('BCN', '01/06/2019','15/06/2019',2, 'price');
 
