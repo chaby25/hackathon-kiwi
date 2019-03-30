@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -37,7 +37,7 @@ app.use(function (req, res, next) {
 var router = express.Router();              // get an instance of the express Router
 
 router.get('/autocomplete', async function (req, res) {
-    var locations = await getLocationFullinformation({term: req.query.city,limit:5,location_types:'airport'});
+    var locations = await getLocationFullinformation({term: req.query.city, limit: 5, location_types: 'airport'});
     var response = [];
     locations.forEach((location) => {
         response.push({
@@ -59,11 +59,20 @@ router.get('/', async function (req, res) {
         5
     );
 
+    const response = await Promise.all([
+        extracted(locations, req, res, 'price'),
+        extracted(locations, req, res, 'quality')
+    ])
+
+    res.json(response);
+});
+
+async function extracted(locations, req, res, sort) {
     const values = await nomad(
         req.query.origin,
         moment(req.query.departure_date),
         moment(req.query.outward_date),
-        req.query.number_of_persons, 'price', locations.map((location) => location.code)
+        req.query.number_of_persons, sort, locations.map((location) => location.code)
     );
     const result2 = [];
     let i = 1;
@@ -75,7 +84,7 @@ router.get('/', async function (req, res) {
         });
     }
 
-    res.json({
+    return {
         price: values.price,
         currency: values.currency,
         totalDuration: values.duration,
@@ -85,8 +94,8 @@ router.get('/', async function (req, res) {
                 return route.distance + sum;
             }, 0),
         routes: result2,
-    });
-});
+    }
+};
 
 // more routes for our API will happen here
 
