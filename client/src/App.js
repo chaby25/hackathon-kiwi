@@ -43,12 +43,17 @@ function App() {
             });
     }, [searchFormData, geolocations]);
 
+    if (searchFormData === null) {
+        return (
+            <SearchForm handleSearchForm={setSearchData} />
+        )
+    }
 
     if (trips !== null) {
         return (
             <Page>
-                {trips.map((trip) => (<div>
-                    <ResultMap destinations={trip.routes} />
+                {trips.map((trip, index) => (<div>
+                    <ResultMap key={index} destinations={trip.routes} />
                 </div>))}
             </Page>
         )
@@ -56,7 +61,6 @@ function App() {
 
     return (
         <Page>
-            <SearchForm handleSearchForm={setSearchData} />
             <SelectorMap
                 handleGeolocation={addGeolocation}
             />

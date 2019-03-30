@@ -3,13 +3,18 @@ import InputField from "@kiwicom/orbit-components/lib/InputField";
 import Button from '@kiwicom/orbit-components/es/Button/index';
 import styled from 'styled-components';
 
-const FormGroup = styled.div`
-  position: fixed;
-  z-index: 1;
+const Page = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   padding: 10px;
   width: 100vw;
+  height: 100vh;
+`;
+
+const FormGroup = styled.div`
+  width: 600px;
 `;
 
 class SearchForm extends React.Component {
@@ -21,13 +26,14 @@ class SearchForm extends React.Component {
 
     render() {
         return (
-            <div>
+            <Page>
                 <FormGroup>
                     <InputField
                         name="origin"
                         label="Origin"
                         onChange={this.onSearchFormChange}
                     />
+                    <br/>
                     <InputField
                         name="number_of_persons"
                         label="Number of persons"
@@ -35,18 +41,21 @@ class SearchForm extends React.Component {
                         placeholder="Number of persons"
                         onChange={this.onSearchFormChange}
                     />
+                    <br/>
                     <InputField
                         name="departure_date"
                         label="Departure date"
                         type="date"
                         onChange={this.onSearchFormChange}
                     />
+                    <br/>
                     <InputField
                         name="outward_date"
                         label="Outward date"
                         type="date"
                         onChange={this.onSearchFormChange}
                     />
+                    <br/>
 
                     <Button onClick={() => {
                         this.props.handleSearchForm(
@@ -58,11 +67,13 @@ class SearchForm extends React.Component {
                             })
                     }}
                             type="primary"
-                            size="normal">
+                            size="normal"
+                            block={true}
+                    >
                         Search
                     </Button>
                 </FormGroup>
-            </div>
+            </Page>
         );
     }
 
