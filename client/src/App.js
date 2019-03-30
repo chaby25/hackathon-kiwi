@@ -25,6 +25,7 @@ function App() {
     return (
         <Page>
             <SearchForm handleSearchForm={(searchFormData) => {
+                console.log(searchFormData);
                 getGeolocations(searchFormData);
             }}/>
             <SelectorMap

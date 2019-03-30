@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 var getLocationsBox = require('./getLocationsBox');
 var nomad = require('./nomad');
 var getLocationInfo = require('./getLocationInfo');
+var getLocationFullinformation = require('./getLocationFullinformation');
+
 var helper = require('./utils/helper');
 var moment = require('moment');
 
@@ -32,6 +34,18 @@ var port = process.env.PORT || 8080;        // set our port
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
+
+router.get('/autocomplete', async function (req, res) {
+    var locations = await getLocationFullinformation({term: req.query.city,limit:5,location_types:'airport'});
+    var response = [];
+    locations.forEach((location) => {
+        response.push({
+            name: location.name,
+            code: location.code
+        })
+    });
+    res.json(response);
+});
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', async function (req, res) {

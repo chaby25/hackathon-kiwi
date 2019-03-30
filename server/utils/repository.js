@@ -25,7 +25,14 @@ module.exports = {
 
         return response.json();
     },
-
+    getLocationsAutocomplete: async function ( parameters) {
+        const query = httpBuildQuery(parameters);
+        const response = await fetch(`${url}/locations/query${query}`, {
+            method: 'GET',
+            headers
+        });
+        return response.json();
+    },
     getLocationByCityId: async function (parameters) {
         const query = httpBuildQuery(parameters);
         const response = await fetch(`${url}/locations/query${query}`, {

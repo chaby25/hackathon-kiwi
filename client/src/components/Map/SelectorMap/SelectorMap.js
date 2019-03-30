@@ -9,7 +9,7 @@ mapboxgl.accessToken =
 const MapWrapper = styled.div`
   height: 100vh;
   width: 100vw;
-`
+`;
 
 function SelectorMap({handleGeolocation}) {
     const mapRef = useRef(null);
