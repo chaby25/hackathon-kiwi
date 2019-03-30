@@ -77,6 +77,20 @@ const TequilaColor = {
     color: 'red'
 };
 
+const Franga = styled.div`
+  background: #00A991;
+  color: #FFF;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding-top: 10px;
+  transform: rotate(-30deg);
+  font-size: 30px;
+  z-index: 2;
+  transform-origin: -100% 0;
+  padding: 10px;
+`;
+
 function App() {
     const [geolocations, setGeolocations] = useState(null);
     const [trips, setTrips] = useState(null);
@@ -123,6 +137,7 @@ function App() {
     if (trips !== null) {
         return (
             <FinalPage>
+                <Franga>Dream</Franga>
                 {trips.map((trip, index) => (
                     <Result key={index} number={index}>
                         <ResultMap destinations={trip.routes} number={index}/>
