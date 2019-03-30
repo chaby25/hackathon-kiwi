@@ -17,7 +17,6 @@ module.exports = {
     },
     nomad: async function (parameters, body) {
         const query = httpBuildQuery(parameters);
-        console.log(`${url}/v2/nomad${query}`);
         const response = await fetch(`${url}/v2/nomad${query}`, {
             method: 'POST',
             headers,
@@ -26,4 +25,14 @@ module.exports = {
 
         return response.json();
     },
+
+    getLocationByCityId: async function (parameters) {
+        const query = httpBuildQuery(parameters);
+        console.log(`${url}/locations/query${query}`);
+        const response = await fetch(`${url}/locations/query${query}`, {
+            method: 'GET',
+            headers
+        });
+        return response.json();
+    }
 };
