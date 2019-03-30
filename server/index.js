@@ -60,7 +60,7 @@ router.get('/', async function (req, res) {
     );
 
     const response = await Promise.all([
-        extracted(locations, req, res, 'price'),
+        //extracted(locations, req, res, 'price'),
         extracted(locations, req, res, 'quality')
     ])
 
@@ -76,6 +76,11 @@ async function extracted(locations, req, res, sort) {
     );
     const result2 = [];
     let i = 1;
+    result2.push({
+       "name": values.route[values.route.length-1].cityTo,
+       "order": ++i,
+       "geolocation": await getLocationInfo({term: values.route[values.route.length-1].flyTo,limit:1}),
+    });
     for (let route of values.route) {
         result2.push({
             "name": route.cityTo,
