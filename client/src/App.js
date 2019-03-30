@@ -73,21 +73,15 @@ const TripInfo = styled.div`
     justify-content: space-between;
 `;
 
-const TequilaColor = {
-    color: 'red'
-};
-
 const Franga = styled.div`
   background: #00A991;
   color: #FFF;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 50px;
+  left: 50px;
   padding-top: 10px;
-  transform: rotate(-30deg);
   font-size: 30px;
   z-index: 2;
-  transform-origin: -100% 0;
   padding: 10px;
 `;
 
@@ -137,9 +131,9 @@ function App() {
     if (trips !== null) {
         return (
             <FinalPage>
-                <Franga>Dream</Franga>
                 {trips.map((trip, index) => (
                     <Result key={index} number={index}>
+                        <Franga>{index ? 'Quality' : 'Cheap'}</Franga>
                         <ResultMap destinations={trip.routes} number={index}/>
                         <TripInfo><div><Airplane/>{trip.totalDistance} km</div>  <div>{trip.totalDuration} h</div>  <div>{trip.price} {trip.currency}</div>
 
