@@ -73,10 +73,6 @@ const TripInfo = styled.div`
     justify-content: space-between;
 `;
 
-const TequilaColor = {
-    color: 'red'
-};
-
 function App() {
     const [geolocations, setGeolocations] = useState(null);
     const [trips, setTrips] = useState(null);
@@ -126,7 +122,7 @@ function App() {
                 {trips.map((trip, index) => (
                     <Result key={index} number={index}>
                         <ResultMap destinations={trip.routes} number={index}/>
-                        <TripInfo><div><Airplane style={TequilaColor}/>{trip.totalDistance} km</div>  <div>{trip.totalDuration}</div>  <div>{trip.price} {trip.currency}</div>
+                        <TripInfo><div><Airplane/>{trip.totalDistance} km</div>  <div>{trip.totalDuration} h</div>  <div>{trip.price} {trip.currency}</div>
 
                             <Button
                                 href={trip.deepLink}

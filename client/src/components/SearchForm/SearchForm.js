@@ -2,7 +2,7 @@ import React from 'react';
 import InputField from "@kiwicom/orbit-components/lib/InputField";
 import Button from '@kiwicom/orbit-components/es/Button/index';
 import styled from 'styled-components';
-import {DateRangePicker} from "react-dates";
+import { DateRangePicker } from "react-dates";
 import Heading from "@kiwicom/orbit-components/es/Heading/index";
 
 const Page = styled.div`
@@ -13,6 +13,10 @@ const Page = styled.div`
   padding: 10px;
   width: 100vw;
   height: 100vh;
+`;
+
+const Title = styled.h1`
+  color: #555;
 `;
 
 const FormGroup = styled.div`
@@ -29,8 +33,8 @@ class SearchForm extends React.Component {
     render() {
         return (
             <Page>
-                <Heading type="display" element="h1">
-                    Visual NOMAD
+                <Heading type="display" element="h1" style={{color: '#666'}}>
+                    <Title>Visual NOMAD</Title>
                 </Heading>
                 <FormGroup>
                     <InputField
@@ -44,9 +48,12 @@ class SearchForm extends React.Component {
                         startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
                         endDate={this.state.endDate} // momentPropTypes.momentObj or null,
                         endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-                        onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+                        onDatesChange={({startDate, endDate}) => this.setState({
+                            startDate,
+                            endDate
+                        })} // PropTypes.func.isRequired,
                         focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                        onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                        onFocusChange={focusedInput => this.setState({focusedInput})} // PropTypes.func.isRequired,
                         block={true}
                     />
                     <br/>
