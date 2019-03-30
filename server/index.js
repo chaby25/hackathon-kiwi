@@ -1,8 +1,3 @@
-// BASE SETUP
-// =============================================================================
-
-// call the packages we need
-
 var express = require('express');        // call express
 var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
@@ -21,8 +16,7 @@ var port = process.env.PORT || 8080;        // set our port
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
-
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -62,7 +56,7 @@ router.get('/', async function (req, res) {
     const response = await Promise.all([
         extracted(locations, req, res, 'price'),
         extracted(locations, req, res, 'quality')
-    ])
+    ]);
 
     res.json(response);
 });
@@ -70,8 +64,8 @@ router.get('/', async function (req, res) {
 async function extracted(locations, req, res, sort) {
     const values = await nomad(
         req.query.origin,
-        moment(req.query.departure_date),
-        moment(req.query.outward_date),
+        moment(req.query.departure_date, 'YYYY-MM-DD'),
+        moment(req.query.outward_date, 'YYYY-MM-DD'),
         req.query.number_of_persons, sort, locations.map((location) => location.code)
     );
     const result2 = [];
@@ -94,12 +88,12 @@ async function extracted(locations, req, res, sort) {
     return {
         price: values.price,
         currency: values.currency,
-        totalDuration: values.duration,
+        totalDuration: helper.convertMinsToHrsMins(Math.floor( values.duration / 60)),
         deepLink: values.deep_link,
         totalDistance:
-            values.route.reduce((sum, route) => {
+            Math.floor(values.route.reduce((sum, route) => {
                 return route.distance + sum;
-            }, 0),
+            }, 0)),
         routes: result2,
     }
 };

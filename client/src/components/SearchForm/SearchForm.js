@@ -2,7 +2,7 @@ import React from 'react';
 import InputField from "@kiwicom/orbit-components/lib/InputField";
 import Button from '@kiwicom/orbit-components/es/Button/index';
 import styled from 'styled-components';
-import Trip from '../Trip/Trip';
+import {DateRangePicker} from "react-dates";
 
 const Page = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ class SearchForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {origin: '', number_of_persons: null, departure_date: '', outward_date: ''}
+        this.state = {origin: '', number_of_persons: null, startDate: null, endDate: null}
     }
 
     render() {
@@ -39,22 +39,19 @@ class SearchForm extends React.Component {
                         name="number_of_persons"
                         label="Number of persons"
                         type="number"
-                        placeholder="Number of persons"
                         onChange={this.onSearchFormChange}
                     />
                     <br/>
-                    <InputField
-                        name="departure_date"
-                        label="Departure date"
-                        type="date"
-                        onChange={this.onSearchFormChange}
-                    />
-                    <br/>
-                    <InputField
-                        name="outward_date"
-                        label="Outward date"
-                        type="date"
-                        onChange={this.onSearchFormChange}
+
+                    <DateRangePicker
+                        startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+                        startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                        endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                        endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                        onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+                        focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                        onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                        block={true}
                     />
                     <br/>
 
@@ -63,8 +60,8 @@ class SearchForm extends React.Component {
                             {
                                 origin: this.state.origin,
                                 number_of_persons: this.state.number_of_persons,
-                                departure_date: this.state.departure_date,
-                                outward_date: this.state.outward_date
+                                departure_date: this.state.startDate.format('YYYY-MM-DD'),
+                                outward_date: this.state.endDate.format('YYYY-MM-DD')
                             })
                     }}
                             type="primary"

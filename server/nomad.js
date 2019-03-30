@@ -32,6 +32,6 @@ module.exports = async function (origin, dateFrom, dateTo, adults, sort, cityCod
             via
         });
 
-    return nomadResponse.data[0];
+    return nomadResponse.data && nomadResponse.data[0];
 };
 

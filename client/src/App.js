@@ -5,36 +5,72 @@ import ResultMap from "./components/Map/ResultMap/ResultMap";
 import SearchForm from './components/SearchForm/SearchForm';
 import styled from 'styled-components';
 import httpBuildQuery from "./httpBuildQuery";
-import Trip from './components/Trip/Trip';
+import Airplane from "@kiwicom/orbit-components/lib/icons/Airplane";
+import Button from '@kiwicom/orbit-components/es/Button/index';
+import Invoice from '@kiwicom/orbit-components/es/icons/Invoice';
 
 const Page = styled.div`
     display:flex;
+    height: 100vh;
+    background: black;
+    padding: 60px 100px;
+`;
+
+const FinalPage = styled.div`
+    display:flex;
+    height: 100vh;
+    background: black;
+    padding: 30px;
+    justify-content: space-around;
+    overflow: hidden;
 `;
 
 
+const Result = styled.div`
+    background: white;
+    flex: 0 0 45%;
+    padding: 30px 30px 50px 30px;
+    transition: 1s all;
+    transform: scale(1) ${(props) => `rotate(${-5 + 20 * props.number}deg)`};
+    z-index: 1;
+    :hover {
+        transform: scale(1.1) ${(props) => `rotate(${-10 + 15 * props.number}deg)`};
+    }
+`;
+
+const TripInfo = styled.div`
+    padding: 10px 0px
+`;
+
+const TequilaColor = {
+    color: 'red'
+};
+
 function App() {
-    const [geolocations, setGeolocations] = useState([]);
+    const [geolocations, setGeolocations] = useState(null);
     const [trips, setTrips] = useState(null);
     const [searchFormData, setSearchData] = useState(null);
 
-    const addGeolocation = (lon, lat) => {
-        setGeolocations(geolocations.concat({lon, lat}))
+    const addGeolocation = (low_lat, low_lon, high_lat, high_lon) => {
+        setGeolocations({low_lat, low_lon, high_lat, high_lon})
     };
 
     useEffect(() => {
-        if (geolocations.length < 2 || searchFormData === null) {
+        if (geolocations === null || searchFormData === null) {
             return undefined;
         }
+
+        const {low_lat, low_lon, high_lat, high_lon} = geolocations;
 
         const query = httpBuildQuery({
             origin: searchFormData.origin,
             number_of_persons: searchFormData.number_of_persons,
             departure_date: searchFormData.departure_date,
             outward_date: searchFormData.outward_date,
-            low_lat: geolocations[0].lat,
-            low_lon: geolocations[0].lon,
-            high_lat: geolocations[1].lat,
-            high_lon: geolocations[1].lon
+            low_lat,
+            low_lon,
+            high_lat,
+            high_lon
         });
 
         fetch(`http://localhost:8080/api${query}`)
@@ -46,23 +82,32 @@ function App() {
 
     if (searchFormData === null) {
         return (
-            <SearchForm handleSearchForm={setSearchData} />
+            <SearchForm handleSearchForm={setSearchData}/>
         )
     }
 
     if (trips !== null) {
+        console.log(trips);
         return (
-            <Page>
-                {trips.map((trip, index) => {
-                    console.log(trip);
-                    return (
-                        <div key={index}>
-                            <ResultMap destinations={trip.routes} />
-                            <Trip destinations={trip.routes}/>
-                        </div>
-                    )
-                })}}
-            </Page>
+            <FinalPage>
+                {trips.map((trip, index) => (
+                    <Result key={index} number={index}>
+                        <ResultMap destinations={trip.routes} number={index}/>
+                        <TripInfo><Airplane style={TequilaColor}/>{trip.totalDistance}km  -  {trip.totalDuration}  -  {trip.price} {trip.currency}
+                            <Button
+                                href="https://kiwi.com"
+                                external={false}
+                                size="normal"
+                                disabled={false}
+                                bordered
+                                iconLeft={<Invoice/>}
+                            >
+                                Buy now
+                            </Button>
+                        </TripInfo>
+                    </Result>
+                ))}
+            </FinalPage>
         )
     }
 
